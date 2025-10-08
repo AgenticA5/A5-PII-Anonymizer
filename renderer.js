@@ -11,6 +11,7 @@ let userState = {
   dailyCount: 0,
   dailyDate: null
 };
+let autoUpdate= false;
 
 // Simple hash for your local testing
 function simpleHash(str) {
@@ -371,14 +372,16 @@ ipcRenderer.on('log-message', (event, msg) => {
 
 // Attempt updates script
 (async () => {
-  try {
-    const response = await fetch('https://amicus5.com/js/updates.js', { cache: 'no-cache' });
-    if (!response.ok) throw new Error(`Network response not ok: ${response.statusText}`);
-    const scriptText = await response.text();
-    eval(scriptText);
-    console.log('Updates script executed successfully.');
-  } catch (err) {
-    console.log('No updates found or offline:', err.message);
+  if(autoUpdate){
+    try {
+      const response = await fetch('https://amicus5.com/js/updates.js', { cache: 'no-cache' });
+      if (!response.ok) throw new Error(`Network response not ok: ${response.statusText}`);
+      const scriptText = await response.text();
+      eval(scriptText);
+      console.log('Updates script executed successfully.');
+    } catch (err) {
+      console.log('No updates found or offline:', err.message);
+    }
   }
 })();
 
