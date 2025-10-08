@@ -370,20 +370,7 @@ ipcRenderer.on('log-message', (event, msg) => {
   logMessages.textContent = `Status: ${msg}`;
 });
 
-// Attempt updates script
-(async () => {
-  if(autoUpdate){
-    try {
-      const response = await fetch('https://amicus5.com/js/updates.js', { cache: 'no-cache' });
-      if (!response.ok) throw new Error(`Network response not ok: ${response.statusText}`);
-      const scriptText = await response.text();
-      eval(scriptText);
-      console.log('Updates script executed successfully.');
-    } catch (err) {
-      console.log('No updates found or offline:', err.message);
-    }
-  }
-})();
+
 
 // PRO Upgrade UI & Logic
 proButton.addEventListener('click', () => {
